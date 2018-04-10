@@ -1,0 +1,18 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1 *ngIf="tasks$ | async">
+   TODO NGRX ({{(tasks$ | async).length}})
+  </h1>
+
+    <div *ngFor="let task of tasks$ | async">
+      <span *ngIf="!task.edited">
+      {{task.title}} - {{task.dueDate | date}}
+      <button (click)="editTask(task)">Edit</button>
+      </span>
+      <app-task-form *ngIf="task.edited" [task]="task" (addTask)="updateTask($event)"></app-task-form>
+    </div>
+
+  <app-task-form [task]="newTask" (addTask)="addTask($event)"></app-task-form>
+</div>
+
+

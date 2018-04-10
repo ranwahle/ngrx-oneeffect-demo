@@ -1,0 +1,12 @@
+<label>
+  Title: <input type="text" [(ngModel)]="task.title">
+</label>
+<label>
+  <input type="date" [(ngModel)]="task.dueDate">
+</label>
+  <button (click)="addTaskClicked()"><span *ngIf="task.edited">Save</span>
+    <span *ngIf="!task.edited">
+    Add
+      </span>
+  </button>
+

@@ -12,7 +12,6 @@
   },
   "author": "Ran Wahle",
   "license": "ISC",
-  "devDependencies": {
-    "@angular/cli": "^1.7.4"
+  "dependencies": {
   }
 }
