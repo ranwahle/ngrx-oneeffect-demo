@@ -2,10 +2,12 @@
   Title: <input type="text" [(ngModel)]="task.title">
 </label>
 <label>
-  <input type="date" [(ngModel)]="task.dueDate">
+  <input [(ngModel)]="task.dueDate" [matDatepicker]="picker">
+  <mat-datepicker #picker></mat-datepicker>
+  <mat-datepicker-toggle [for]="picker"></mat-datepicker-toggle>
 </label>
-  <button (click)="addTaskClicked()"><span *ngIf="task.edited">Save</span>
-    <span *ngIf="!task.edited">
+  <button (click)="addTaskClicked()"><span *ngIf="task.id !== undefined">Save</span>
+    <span *ngIf="task.id === undefined">
     Add
       </span>
   </button>

@@ -11,18 +11,24 @@ import {getTasksSelector} from './store/app.selectors';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-
+  displayedColumns = ['id', 'title', 'dueDate', 'edit'];
   title = 'One effct NGRX';
   newTask:Task;
   tasks$: Observable<Task[]>
+  editedTask: Task;
   constructor(private store: Store<any>) {
   }
-  addTask(task: Task) {
-    this.store.dispatch(new AddtaskAction(task))
+  saveTask(task: Task) {
+    if (task.id === undefined) {
+      this.store.dispatch(new AddtaskAction(task))
+    } else {
+      this.store.dispatch(new UpdateTaskAction(task))
+
+    }
   }
 
   editTask(task: Task){
-    task.edited = true;
+    this.editedTask = task;
   }
 
   updateTask(task: Task) {

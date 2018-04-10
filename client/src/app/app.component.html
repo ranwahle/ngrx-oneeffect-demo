@@ -1,18 +1,37 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div style="text-align:center">
   <h1 *ngIf="tasks$ | async">
-   TODO NGRX ({{(tasks$ | async).length}})
+    TODO NGRX ({{(tasks$ | async).length}})
   </h1>
+  New task:
+  <app-task-form [task]="editedTask || newTask" (addTask)="saveTask($event)"></app-task-form>
 
-    <div *ngFor="let task of tasks$ | async">
-      <span *ngIf="!task.edited">
-      {{task.title}} - {{task.dueDate | date}}
-      <button (click)="editTask(task)">Edit</button>
-      </span>
-      <app-task-form *ngIf="task.edited" [task]="task" (addTask)="updateTask($event)"></app-task-form>
-    </div>
+  <mat-table [dataSource]="tasks$ | async">
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let myRowData; columns: displayedColumns"></mat-row>
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> No.</mat-header-cell>
+      <mat-cell *matCellDef="let task"> {{task.id}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef> Title</mat-header-cell>
+      <mat-cell *matCellDef="let task"> {{task.title}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="dueDate">
+      <mat-header-cell *matHeaderCellDef> Due</mat-header-cell>
+      <mat-cell *matCellDef="let task"> {{task.dueDate | date}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="edit">
+      <mat-header-cell *matHeaderCellDef> Edit</mat-header-cell>
+      <mat-cell *matCellDef="let task"> <button (click)="editTask(task)" >Edit</button></mat-cell>
+    </ng-container>
+    <!--<span *ngIf="!task.edited">-->
+    <!--{{task.title}} - {{task.dueDate | date}}-->
+    <!--<button (click)="editTask(task)">Edit</button>-->
+    <!--</span>-->
+    <!--<app-task-form *ngIf="task.edited" [task]="task" (addTask)="updateTask($event)"></app-task-form>-->
+  </mat-table>
 
-  <app-task-form [task]="newTask" (addTask)="addTask($event)"></app-task-form>
 </div>
 
 
