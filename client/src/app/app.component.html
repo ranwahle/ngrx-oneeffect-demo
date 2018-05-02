@@ -5,7 +5,7 @@
   </h1>
   New task:
   <app-task-form [task]="editedTask || newTask" (addTask)="saveTask($event)"></app-task-form>
-
+<div class="error" *ngIf="showError$ | async">Sorry, didn't work</div>
   <mat-table [dataSource]="tasks$ | async">
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let myRowData; columns: displayedColumns"></mat-row>
@@ -22,8 +22,11 @@
       <mat-cell *matCellDef="let task"> {{task.dueDate | date}}</mat-cell>
     </ng-container>
     <ng-container matColumnDef="edit">
-      <mat-header-cell *matHeaderCellDef> Edit</mat-header-cell>
-      <mat-cell *matCellDef="let task"> <button (click)="editTask(task)" >Edit</button></mat-cell>
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let task">
+        <button (click)="editTask(task)" >Edit</button>
+        <button (click)="deleteTask(task)" >Delete</button>
+        </mat-cell>
     </ng-container>
     <!--<span *ngIf="!task.edited">-->
     <!--{{task.title}} - {{task.dueDate | date}}-->

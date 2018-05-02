@@ -3,29 +3,34 @@ import {Action} from '@ngrx/store';
 import {Task} from '../model/task';
 
 export const GET_TASKS_SUCCESS_ACTION = `Get Tasks Success`;
+export const REMOVE_ERROR = 'Remove Errors';
 
 export class GetTasksAction extends ApiCallAction {
   constructor() {
     super({
       url: '/api/tasks',
       method: 'get',
+      successSideActions: [() => new RemoveErrorAction()],
       successAction: result => new GetTasksActionSuccess(result),
-    })
+    });
   }
 }
 
-export class AddtaskAction extends ApiCallAction {
+export class RemoveErrorAction implements Action {
+  readonly type = REMOVE_ERROR;
+}
+
+export class AddTaskAction extends ApiCallAction {
   constructor(public task: Task) {
     super({
         url: `/api/tasks`,
         method: 'post',
-        requestMapper: (task: Task) => {
-          task.dueDate = new Date();
-          return task
+        requestMapper: (clientTask: Task) => {
+          return {...clientTask, dueDate: new Date()};
         },
         successAction: () => new GetTasksAction()
       },
-      task)
+      task);
   }
 }
 
@@ -36,9 +41,21 @@ export class UpdateTaskAction extends ApiCallAction {
         method: 'put',
         successAction: () => new GetTasksAction()
       },
-      task)
+      task);
   }
 }
+
+export class DeleteTaskAction extends ApiCallAction {
+  constructor(public task: Task) {
+    super({
+        url: `/api/tasks/${task.id}`,
+        method: 'delete',
+        successAction: () => new GetTasksAction()
+      },
+      task);
+  }
+}
+
 
 export class GetTasksActionSuccess implements Action {
   readonly type = GET_TASKS_SUCCESS_ACTION;
