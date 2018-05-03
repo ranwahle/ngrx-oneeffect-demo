@@ -9,7 +9,8 @@ import {Injectable} from '@angular/core';
 @Injectable()
 export class ApiCallEffect {
   @Effect() apiCallEffect: Observable<Action> = this.actions$
-    .ofType(API_CALL_ACTION).do((action: ApiCallAction) => {
+    .ofType(API_CALL_ACTION).
+    do((action: ApiCallAction) => {
       (action as any).type =  `${action.type} : ${action.metadata.method} ${action.metadata.url}`;
     }).switchMap((action: ApiCallAction) => {
 

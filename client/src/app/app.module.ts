@@ -14,6 +14,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { TaskFormComponent } from './task-form/task-form.component';
 import {FormsModule} from '@angular/forms';
 import {MatDatepickerModule, MatNativeDateModule, MatTableModule} from '@angular/material';
+import {TodoEffects} from './store/app.effects';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import {MatDatepickerModule, MatNativeDateModule, MatTableModule} from '@angular
     MatDatepickerModule,
     MatNativeDateModule,
     StoreModule.forRoot(reducer),
-    EffectsModule.forRoot([ApiCallEffect]),
+    EffectsModule.forRoot([TodoEffects, ApiCallEffect]),
     !environment.production ? StoreDevtoolsModule.instrument({
       maxAge: 30,
 

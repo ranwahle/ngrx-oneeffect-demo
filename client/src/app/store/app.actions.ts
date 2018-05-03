@@ -4,6 +4,7 @@ import {Task} from '../model/task';
 
 export const GET_TASKS_SUCCESS_ACTION = `Get Tasks Success`;
 export const REMOVE_ERROR = 'Remove Errors';
+export const DELETE_TASK_ATTEMPT = 'Delete task attempt'
 
 export class GetTasksAction extends ApiCallAction {
   constructor() {
@@ -44,6 +45,11 @@ export class UpdateTaskAction extends ApiCallAction {
       task);
   }
 }
+//
+// export class DeleteTaskAction implements Action {
+//   readonly type = DELETE_TASK_ATTEMPT;
+//   constructor(public task: Task) {}
+// }
 
 export class DeleteTaskAction extends ApiCallAction {
   constructor(public task: Task) {
